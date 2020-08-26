@@ -57,7 +57,7 @@ class App extends React.Component {
             Last Modified:{" "} 
             {this.state.selectedFile?.lastModifiedDate?.toDateString()} 
           </p> 
-          <img style={{maxWidth: '100%'}} src={this.state.imgSrc} alt="user uploadedd image"/>
+          <img style={{maxWidth: '100%'}} src={this.state.imgSrc} alt="user uploaded"/>
         </> 
       ); 
     }
@@ -107,7 +107,7 @@ class App extends React.Component {
             {this.state.url != null ? (
             <Paper style={{padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
               <h2>
-                Your QR Code is ready!! <span role="img">🎉</span>
+                Your QR Code is ready!!
               </h2>
               <div style={{padding: '15px', display: 'flex', justifyContent: 'center'}}>
                 <QRCode value={this.state.url} />
