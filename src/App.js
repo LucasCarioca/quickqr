@@ -69,7 +69,7 @@ class App extends React.Component {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}}>
-            QuickQrCode
+            QuickQr Code
           </Typography>
         </Toolbar>
       </AppBar>
