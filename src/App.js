@@ -107,7 +107,7 @@ class App extends React.Component {
             {this.state.url != null ? (
             <Paper style={{padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
               <h2>
-                Your QR Code is ready!! 🎉
+                Your QR Code is ready!! <span role="img">🎉</span>
               </h2>
               <div style={{padding: '15px', display: 'flex', justifyContent: 'center'}}>
                 <QRCode value={this.state.url} />
