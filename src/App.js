@@ -57,7 +57,7 @@ class App extends React.Component {
             Last Modified:{" "} 
             {this.state.selectedFile?.lastModifiedDate?.toDateString()} 
           </p> 
-          <img style={{maxWidth: '100%'}} src={this.state.imgSrc}/>
+          <img style={{maxWidth: '100%'}} src={this.state.imgSrc} alt="user uploadedd image"/>
         </> 
       ); 
     }
