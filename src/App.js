@@ -148,7 +148,9 @@ class Home extends React.Component {
                             </h2>
                             <p>Skylink id: {this.state.skylink}</p>
                             <a href={this.state.url} target="_target">Skylink url</a>
-                            <Button variant="outlined" color="primary" onClick={() => {this.download()}}>Download</Button>
+                            <br/>
+                            <Button variant="contained" color="primary" onClick={() => {this.download()}}>Download</Button>
+                            <Divider/>
                             <div className="QrCode"
                                  style={{padding: '15px', display: 'flex', justifyContent: 'center'}}>
                                 <QRCode id="canvas" value={this.state.url}/>
