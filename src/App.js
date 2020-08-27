@@ -21,7 +21,8 @@ class App extends React.Component {
     selectedFile: null,
     url: null,
     loading: false,
-    imgSrc: null
+    imgSrc: null,
+    skylink: null,
   }; 
 
   onFileChange = event => { 
@@ -36,7 +37,7 @@ class App extends React.Component {
   onFileUpload = () => { 
     this.setState({loading: true});
     upload(this.state.selectedFile).then(link => {
-      this.setState({loading: false});
+      this.setState({loading: false, skylink: link});
       console.log(link);
       this.setState({url: `https://www.siacdn.com/${link}`})
     }).catch(error => {
@@ -69,7 +70,7 @@ class App extends React.Component {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{flexGrow: 1}}>
-            QuickQr Code
+            QuickQrCode
           </Typography>
         </Toolbar>
       </AppBar>
@@ -78,7 +79,8 @@ class App extends React.Component {
           
         </h1> 
         <Grid container spacing={3}>
-          <Grid item xs={4}>
+          {this.state.url != null ? null :
+          <Grid item xs={12}>
             <Paper style={{padding: '15px'}}>
               {this.state.selectedFile == null ? (
                 <>
@@ -102,16 +104,25 @@ class App extends React.Component {
               )}
               {this.fileData()} 
             </Paper>
-          </Grid>
-          <Grid item xs={8}>
+          </Grid>}
+          <Grid item xs={12}>
             {this.state.url != null ? (
             <Paper style={{padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
               <h2>
                 Your QR Code is ready!!
               </h2>
+              <p>Skylink id: {this.state.skylink}</p>
+              <a href={this.state.url} target="_target">Skylink url</a>
               <div style={{padding: '15px', display: 'flex', justifyContent: 'center'}}>
                 <QRCode value={this.state.url} />
               </div>
+              <Button variant="outlined" color="secondary" onClick={() => {
+                  this.setState({selectedFile: null,
+                    url: null,
+                    loading: false,
+                    imgSrc: null,
+                    skylink: null
+                  })}}> Start over </Button>
             </Paper>
             ) : null}
           </Grid>
