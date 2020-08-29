@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
-import {AppBar, Container, Toolbar, Typography} from '@material-ui/core';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {AppBar, Container, Toolbar, Typography, Button} from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import HomeIcon from '@material-ui/icons/Home';
+import {BrowserRouter as Router, Route, Switch, Link} from "react-router-dom";
 import CodeResultsPage from "./pages/CodeResultsPage";
 import CreateCodePage from "./pages/CreateCodePage";
-import Home from "./pages/Home";
+import Landing from "./pages/Landing";
 
 const App = () => {
     return (
@@ -14,6 +17,9 @@ const App = () => {
                     <Typography variant="h6" style={{flexGrow: 1}}>
                         QuickQrCode
                     </Typography>
+                    <Button component={Link} to="/" color="inherit"><HomeIcon/></Button>
+                    <Button component={Link} to="/code"color="inherit"><AddCircleIcon/></Button>
+                    <Button component={Link} to="/login"color="inherit"><AccountCircleIcon/></Button>
                 </Toolbar>
             </AppBar>
             <br/>
@@ -26,7 +32,7 @@ const App = () => {
                         <CreateCodePage/>
                     </Route>
                     <Route path="/">
-                        <Home/>
+                        <Landing/>
                     </Route>
                 </Switch>
             </Container>

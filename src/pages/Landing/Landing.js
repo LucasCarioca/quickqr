@@ -3,7 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import {Link} from "react-router-dom";
 import {Button} from "@material-ui/core";
 
-const Home = () => {
+const Landing = () => {
     return (
         <Paper style={{padding: '15px', textAlign: 'center'}}>
             <h1>Welcome to QuickQrCode</h1>
@@ -18,4 +18,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Landing;
