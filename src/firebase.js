@@ -1,5 +1,6 @@
 import app from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/database';
 import React from 'react';
 
 export const FirebaseContext = React.createContext(null);
@@ -19,9 +20,17 @@ class Firebase {
     constructor() {
         app.initializeApp(config);
         this.AUTH_LS_KEY = "firebaseAuth";
+        const auth = localStorage.getItem(this.AUTH_LS_KEY);
+        if (!auth) {
+            this.user = null;
+            this.credential = null
+        } else {
+            const {user, credential} = JSON.parse(auth);
+            this.user = user || null;
+            this.credential = credential || null;
+        }
         this.auth = app.auth();
-        this.user = null;
-        this.credential = null;
+        this.database = app.database();
         this.googleProvider = new app.auth.GoogleAuthProvider();
     }
 

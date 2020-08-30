@@ -14,17 +14,24 @@ const App = () => {
     const firebase = useContext(FirebaseContext);
     const [user, setUser] = useState(firebase.user);
     const [loading, setLoading] = useState(true);
-
+    console.log(user);
     useEffect(() => {
-        firebase.auth.getRedirectResult().then(res => {
+        if (user != null) {
             setLoading(false);
-            firebase.user = res?.user || null;
-            firebase.credential = res?.credential || null;
-            setUser(firebase.user);
-        }).catch(error => {
-            console.error(error);
-        });
-        console.log(firebase.auth.currentUser);
+        } else {
+            firebase.auth.getRedirectResult().then(res => {
+                setLoading(false);
+                firebase.user = res?.user || null;
+                firebase.credential = res?.credential || null;
+                localStorage.setItem(firebase.AUTH_LS_KEY, JSON.stringify({
+                    user: firebase.user,
+                    credential: firebase.credential
+                }));
+                setUser(firebase.user);
+            }).catch(error => {
+                console.error(error);
+            });
+        }
     }, [firebase])
 
     const signOut = () => {
