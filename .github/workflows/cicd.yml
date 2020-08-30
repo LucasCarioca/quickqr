@@ -1,0 +1,50 @@
+name: CICD
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - 'master'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build --if-present
+        env:
+          REACT_APP_API_KEY: ${{secrets.REACT_APP_API_KEY}}
+          REACT_APP_AUTH_DOMAIN: ${{secrets.REACT_APP_AUTH_DOMAIN}}
+          REACT_APP_DATABASE_URL: ${{secrets.REACT_APP_DATABASE_URL}}
+          REACT_APP_PROJECT_ID: ${{secrets.REACT_APP_PROJECT_ID}}
+          REACT_APP_STORAGE_BUCKET: ${{secrets.REACT_APP_STORAGE_BUCKET}}
+          REACT_APP_MESSAGING_SENDER_ID: ${{secrets.REACT_APP_MESSAGING_SENDER_ID}}
+          REACT_APP_APP_ID: ${{secrets.REACT_APP_APP_ID}}
+          REACT_APP_MEASUREMENT_ID: ${{secrets.REACT_APP_MEASUREMENT_ID}}
+      - run: npm test
+      - name: Netlify Deploy
+        uses: jsmrcaga/action-netlify-deploy@v1.0.1
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: true
+          build_directory: build
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run release
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: quickqr-webapp
+          path: build
