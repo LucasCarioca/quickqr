@@ -64,7 +64,6 @@ class CreateCodePage extends React.Component {
     };
 
     render() {
-        console.log(this.context);
         const link = document.createElement('a');
         link.addEventListener('click', function (ev) {
             const canvas = document.querySelector('.Qrcode > canvas');
