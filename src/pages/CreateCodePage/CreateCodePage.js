@@ -2,10 +2,12 @@ import React from "react";
 import {upload} from "../../service/skynet.service";
 import {Button, CircularProgress, Divider, Paper} from "@material-ui/core";
 import {Redirect} from "react-router-dom";
+import {FirebaseContext} from "../../firebase";
 
 
 class CreateCodePage extends React.Component {
 
+    static contextType = FirebaseContext;
     state = {
         selectedFile: null,
         url: null,
@@ -26,6 +28,13 @@ class CreateCodePage extends React.Component {
     onFileUpload = () => {
         this.setState({loading: true});
         upload(this.state.selectedFile).then(link => {
+            if (this.context.user != null) {
+                this.context.database.ref('codes/' + this.context.user.uid).push().set({
+                    name: this.state.selectedFile?.name,
+                    type: this.state.selectedFile?.type,
+                    linkId: link
+                });
+            }
             const pathToResults = `/code/${link}`
             console.log(pathToResults);
             this.setState({loading: false, url: `https://www.siacdn.com/${link}`, pathToResults})
@@ -55,6 +64,7 @@ class CreateCodePage extends React.Component {
     };
 
     render() {
+        console.log(this.context);
         const link = document.createElement('a');
         link.addEventListener('click', function (ev) {
             const canvas = document.querySelector('.Qrcode > canvas');
